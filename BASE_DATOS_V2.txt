@@ -1,0 +1,79 @@
+create table categoria  (
+id int  primary key IDENTITY(1,1),
+nombre varchar (20)NOT NULL,
+descripcion varchar(100) NOT NULL,
+tipo_red varchar(2) NOT NULL,
+);
+
+CREATE TABLE trabajador(
+dni varchar(20) primary key ,
+nombre varchar(100) not null,
+telefono varchar(40) not null,
+direccion varchar(200) not null,
+correo varchar(50) not null
+
+)
+;
+
+create table cliente(
+ruc varchar(20) primary key ,
+razon_social varchar(200) not null,
+telefono varchar(50) not null,
+contacto_referencia varchar(100) not null,
+correo  varchar(100) not null,
+direccion varchar(200) not null
+);
+
+//MODIFICADO
+create table producto(
+serie varchar(50) primary key,
+nombre varchar(200) not null,
+precio money not null,
+stock int not null,
+marca varchar(50) not null,
+modelo varchar(50) not null,
+garantia varchar(50) not null,
+proveedor varchar(50) not null,
+ruta varchar(200) not null
+);
+
+create table equipo(
+serie varchar(50) primary key,
+marca varchar(50) not null,
+modelo varchar(50) not null,
+observacion varchar(100) not null,
+ip_asiganda varchar(50),
+capacidad varchar(50),
+ubicacion varchar(50),
+anexo varchar(50) ,
+ingreso varchar(20) not null,
+fecha_ingreso varchar(50),
+fecha_salida varchar(50),
+id_categoria int not null,
+cliente_ruc varchar (20) not null,
+);
+
+create table usuario(
+id int primary key IDENTITY(1,1) ,
+nombre varchar(100) not null,
+usuario varchar (20) not null,
+correo varchar(100) not null,
+contrasena varchar(20) not null ,
+)
+;
+go
+insert into usuario values('Francisco Gutierrez Balcazar','fgutierrez','fgutierrez@toshiko.com','123456');
+insert into usuario values('Angel Abad Gil','jabad','jabad@toshiko.com','123456')
+
+
+
+insert into cliente values('10770137468','Francisco Gutierrez','978820236','Francisco Gutierrez Balcazar','j.balcazar.f@gmail.com','Magdalena del Mar');
+
+insert into producto values('TG123456HY','HP 34 ',
+500.20,5,'HP','ALL ONE',2,'Deltron','hp45.jpg');
+
+insert into producto values('102030405060','TOSHIKO SAC',
+'998745621','Jose Galvez Palomino','pg.jose@gmail.com','San Martin 254');
+
+select * from producto;
+select * from cliente;

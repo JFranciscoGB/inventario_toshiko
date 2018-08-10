@@ -1,0 +1,48 @@
+create table categoria  (
+id int  primary key IDENTITY(1,1),
+nombre varchar (20)NOT NULL,
+descripcion varchar(100) NOT NULL
+);
+
+CREATE TABLE trabajador(
+dni varchar(20) primary key ,
+nombre varchar(100) not null,
+telefono varchar(40) not null,
+direccion varchar(200) not null,
+correo varchar(50) not null
+
+)
+;
+
+create table cliente(
+ruc varchar(20) primary key ,
+razon_social varchar(200) not null,
+telefono varchar(50) not null,
+contacto_referencia varchar(100) not null,
+correo  varchar(100) not null,
+direccion varchar(200) not null
+)
+;
+
+create table producto(
+serie varchar(50) primary key,
+nombre varchar(200) not null,
+precio money not null,
+stock int not null,
+marca varchar(50) not null,
+modelo varchar(50) not null,
+garantia varchar(50) not null,
+proveedor varchar(50) not null,
+ruta varchar(200) not null
+);
+
+
+
+insert into producto values('TG123456HY','HP 34 ',
+500.20,5,'HP','ALL ONE',2,'Deltron','hp45.jpg');
+
+insert into producto values('102030405060','TOSHIKO SAC',
+'998745621','Jose Galvez Palomino','pg.jose@gmail.com','San Martin 254');
+
+select * from producto;
+select * from cliente;
