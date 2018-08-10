@@ -2,6 +2,7 @@
 <?php
 include("conexion.php");
 include("header.html");
+include('session.php');
 ?>
 
 <body>
@@ -50,10 +51,6 @@ include("header.html");
 			document.getElementById("anexo").disabled=true;
 		//	document.getElementById("anexo").value="NO REQUIERE";
 			document.getElementById("lab-anexo").innerHTML="NO REQUIERE";
-
-			document.getElementById("ubicacion").disabled=true;
-		//	document.getElementById("ubicacion").value="NO REQUIERE";
-			document.getElementById("lab-ubicacion").innerHTML="NO REQUIERE";
 
 
 			}
@@ -114,8 +111,6 @@ include("header.html");
 
 					echo '<option value='.$ruc.'>'.$nombr.'</option>';
 ?>
-
-
 		    <?php } ?>
 				</select>
 
@@ -124,8 +119,8 @@ include("header.html");
         <i class="material-icons prefix">queue_play_next</i>
         <select name="ingreso" id="ingreso">
           <option value="" disabled selected >Ingreso</option>
-          <option value="1" >Inventario</option>
-          <option value="2" >Soporte Tecnico</option>
+          <option value="Inventario" >Inventario</option>
+          <option value="Soporte Tecnico" >Soporte Tecnico</option>
       	</select>
 				</div>
 				<!--   2 fila   -->
@@ -135,11 +130,29 @@ include("header.html");
           <input id="icon_prefix" type="text" name="serie" class="validate">
           <label for="icon_prefix">Serie</label>
         </div>
+
 				<div class="input-field col l4 s12">
-					<i class="material-icons prefix">library_add</i>
-					<input  type="text" name="marca" id="marca" class="validate">
-					<label for="icon_prefix">Marca</label>
+				<i class="material-icons prefix">branding_watermark</i>
+				<select name="marca" id="marca">
+					<option value="" disabled selected >MARCA</option>
+					<option value="HP" >HP</option>
+					<option value="DELL" >DELL</option>
+					<option value="IBM" >IBM</option>
+					<option value="LENOVO" >LENOVO</option>
+					<option value="TOSHIBA" >TOSHIBA</option>
+					<option value="MICROSOFT" >MICROSOFT</option>
+					<option value="APC" >APC</option>
+					<option value="EPSON" >EPSON</option>
+					<option value="CANON" >CANON</option>
+					<option value="INTEL" >INTEL</option>
+					<option value="AMD" >AMD</option>
+					<option value="SAMSUNG" >SAMSUNG</option>
+					<option value="BTICINO" >BTICINO</option>
+					<option value="OLG" >OLG</option>
+				</select>
 				</div>
+
+
 				<div class="input-field col l4 s12">
 					<i class="material-icons prefix">library_add</i>
 					<input id="icon_telephone" type="tel" name="modelo" class="validate">
@@ -158,11 +171,17 @@ include("header.html");
 					<input id="icon_telephone" type="tel" name="capacidad" class="validate">
 					<label for="icon_telephone">Capacidad</label>
 				</div>
-					<div class="input-field col l4 s12">
-					<i class="material-icons prefix">local_offer</i>
-					<input id="ubicacion" type="text" name="ubicacion" class="validate">
-					<label id="lab-ubicacion" for="icon_prefix">Ubicacion</label>
+
+				<div class="input-field col l4 s12">
+				<i class="material-icons prefix">store</i>
+				<select name="ubicacion" id="ubicacion">
+					<option value="" disabled selected >Ubicacion</option>
+					<option value="Soporte Tecnico" >Area Soporte Tecnico</option>
+					<option value="Administraccion" >Administraccion</option>
+					<option value="Ventas" >Ventas</option>
+					</select>
 				</div>
+
 				</div>
 				<!--   4 fila   -->
 				<div class="row">
@@ -207,45 +226,64 @@ $fechota = (string)$fecha_entrada;
 //echo "FECHA ".$hoy;
 //echo "PROBANDO VARIABLES ".$categoria." -".$cliente;
 $fecha_salida="Sin Salida";
-/*
-echo "CATEGORIA ".$categoria."\n";
-echo "Cliente ".$cliente."\n";
-echo "serie ".$serie."\n";
-echo "marca".$marca;
-echo "modelo".$modelo;
-echo "observacion".$observacion;
-echo "IP".$ip;
-echo "CAPACIDAD".$capacidad;
-echo "UBICACION".$ubicacion;
-echo "ANEXO".$anexo;
-echo "INGRESO".$ingreso;
-echo "fecha 1".$fecha_entrada;
-echo "fecha 2".$fecha_salida;
-*/
-if($ip==null||$capacidad==null||$ubicacion==null||$anexo==null){
-  $ip="NO";
-  $capacidad="NO";
-  $ubicacion="NO";
-  $anexo="NO";
-  $cat= (int) $categoria;
-  $insertar="INSERT INTO equipo(serie,marca,modelo,observacion,ip_asiganda,capacidad,ubicacion,anexo,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
-   VALUES ('$serie','$marca','$modelo',$observacion,'$ip','$capacidad','$ubicacion','$anexo','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
 
-  $ejecutar = sqlsrv_query($conn,$insertar);
+echo "CATEGORIA ".$categoria."\n"; echo"</br>";
+echo "Cliente ".$cliente."\n";echo"</br>";
+echo "serie ".$serie."\n";echo"</br>";
+echo "marca ".$marca;echo"</br>";
+echo "modelo ".$modelo;echo"</br>";
+echo "observacion ".$observacion;echo"</br>";
+echo "IP ".$ip;echo"</br>";
+echo "CAPACIDAD ".$capacidad;echo"</br>";
+echo "UBICACION ".$ubicacion;echo"</br>";
+echo "ANEXO ".$anexo;echo"</br>";
+echo "INGRESO ".$ingreso;echo"</br>";
+echo "fecha 1 ".$fecha_entrada;echo"</br>";
+echo "fecha 2 ".$fecha_salida;echo"</br>";
+if($ip==null||$anexo==null){
+//$ip="NO";
+//$capacidad="NO";
+//$ubicacion="NO";
+//$anexo="NO";
+	echo"</br>";echo"</br>";
+	echo" CAMBIANDO A NO  VER RESULTADOS";echo"</br>";
+	echo "IP ".$ip;echo"</br>";
+	echo "CAPACIDAD ".$capacidad;echo"</br>";
+	echo "UBICACION ".$ubicacion;echo"</br>";
+	echo "ANEXO".$anexo;echo"</br>";
+  $cat= (int) $categoria;
+  $insertar="INSERT INTO equipo_o(serie,marca,modelo,observacion,capacidad,ubicacion,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
+   VALUES ('$serie','$marca','$modelo','$observacion','$capacidad','$ubicacion','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
+
+  $ejecutar=sqlsrv_query($conn,$insertar);
+	if($ejecutar){
+echo "<h3>INSERTADO CORRECTAMENTE</h3>";
+	}
+	else {
+echo "<h3>NO INSERTADO ERRORRRRRR</h3>";
+if( ($errors = sqlsrv_errors() ) != null) {
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
+    }
+
+	}
 
 }
 else{
+	  $cat= (int) $categoria;
+	$insertar="INSERT INTO equipo_o(serie,marca,modelo,observacion,ip_asiganda,capacidad,ubicacion,anexo,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
+   VALUES ('$serie','$marca','$modelo','$observacion','$ip','$capacidad','$ubicacion','$anexo','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
+
+  $ejecutar=sqlsrv_query($conn,$insertar);
 
 }
 
 
 
-if($ejecutar){
- //echo "<h3>INSERTADO CORRECTAMENTE</h3>";
-}
-else {
- //echo "<h3>NO INSERTADO ERRORRRRRR</h3>";
-}
+
 }
 else{
  //echo "<h3>SIN ACCION</h3>";
@@ -261,15 +299,11 @@ else{
               <th>Cliente </th>
               <th>Serie</th>
 			        <th>Marca</th>
-              <th>Modelo</th>
+							<th>Modelo</th>
               <th>Observacion</th>
-			        <th>Ip</th>
-			        <th>Capacidad</th>
-              <th>Ubicacion</th>
-			        <th>Anexo</th>
-              <th>Ingreso</th>
+		          <th>Ubicacion</th>
+		          <th>Ingreso</th>
               <th>Fecha Entrada</th>
-              <th>Fecha Salida</th>
               <th>Editar</th>
               <th>Eliminar</th>
           </tr>
@@ -277,25 +311,23 @@ else{
 
         <tbody>
           <?php
-          $consulta="select * from equipo";
+          $consulta="select equipo_o.serie,equipo_o.marca,equipo_o.modelo,equipo_o.observacion,equipo_o.ubicacion,equipo_o.ingreso,
+					equipo_o.fecha_ingreso,equipo_o.cliente_ruc,categoria.nombre ,cliente.razon_social
+					from equipo_o  INNER JOIN categoria on equipo_o.id_categoria=categoria.id
+					INNER JOIN cliente ON equipo_o.cliente_ruc=cliente.ruc";
           $ejecutar=sqlsrv_query($conn,$consulta);
           $i=0;
           while ($fila=sqlsrv_fetch_array($ejecutar)) {
             // code...
            $seri=$fila['serie'];
-           $categoria=$fila['id_categoria'];
-           $cliente=$fila['cliente_ruc'];
-           $serie=$fila['serie'];
-           $marca=$fila['marca'];
+					 $categoria=$fila['nombre'];
+           $cliente=$fila['razon_social'];
+          $marca=$fila['marca'];
            $modelo=$fila['modelo'];
            $observacion=$fila['observacion'];
-           $ip=$fila['ip_asiganda'];
-           $capacidad=$fila['capacidad'];
            $ubicacion=$fila['ubicacion'];
-           $anexo=$fila['anexo'];
            $ingreso=$fila['ingreso'];
            $fecha_entrada=$fila['fecha_ingreso'];
-           $fecha_salida=$fila['fecha_salida'];
            $i++;
 
            ?>
@@ -304,19 +336,15 @@ else{
           <tr>
             <td><?php echo $categoria ?></td>
             <td><?php echo $cliente ?></td>
-            <td><?php echo $serie?></td>
+            <td><?php echo $seri?></td>
             <td><?php echo $marca?></td>
             <td><?php echo $modelo ?></td>
             <td><?php echo $observacion?></td>
-            <td><?php echo $ip?></td>
-            <td><?php echo $capacidad?></td>
             <td><?php echo $ubicacion?></td>
-            <td><?php echo $anexo?></td>
             <td><?php echo $ingreso?></td>
             <td><?php echo $fecha_entrada?></td>
-            <td><?php echo $fecha_salida?></td>
-            <td><a href="producto.php?editar=<?php echo $serie?>">Editar</a></td>
-            <td><a href="producto.php?borrar=<?php echo $serie?>">Borrar</a></td>
+            <td><a href="producto.php?editar=<?php echo $seri?>">Editar</a></td>
+            <td><a href="producto.php?borrar=<?php echo $seri?>">Borrar</a></td>
 
           </tr>
           <!---final del cuerpo de tabla--->
@@ -339,7 +367,7 @@ else{
           <?php
           if(isset($_GET['borrar'])){
           $borrar_id=$_GET['borrar'];
-          $consulta="DELETE from equipo where serie='$borrar_id'";
+          $consulta="DELETE from equipo_o where serie='$borrar_id'";
           $ejecutar=sqlsrv_query($conn,$consulta);
 
           if($ejecutar){
