@@ -14,7 +14,7 @@ $row = sqlsrv_fetch_array($ses_sql);
 $login_session =$row['usuario'];
 echo "login sesion " .$login_session;
 if(!isset($login_session)){
-	echo "esta aca en login sesion SESION.PHP";
+	echo "esta aca francisco";
 sqlsrv_close($conn); // Cerrando la conexion
 header('Location: index.php'); // Redirecciona a la pagina de inicio
 }
