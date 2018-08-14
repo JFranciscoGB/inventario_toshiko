@@ -8,13 +8,12 @@ session_start();// Iniciando Sesion
 $user_check=$_SESSION['login_user_sys'];
 // SQL Query para completar la informacion del usuario
 
-$ses_sql=sqlsrv_query($conn, "select usuario from usuario where usuario='".$user_check."';");
+$ses_sql=sqlsrv_query($conn, "select usuario ,nombre from usuario where usuario='".$user_check."';");
 
 $row = sqlsrv_fetch_array($ses_sql);
 $login_session =$row['usuario'];
-echo "login sesion " .$login_session;
+$nombre_usuario =$row['nombre'];
 if(!isset($login_session)){
-	echo "esta aca en login sesion SESION.PHP";
 sqlsrv_close($conn); // Cerrando la conexion
 header('Location: index.php'); // Redirecciona a la pagina de inicio
 }
