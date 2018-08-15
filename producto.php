@@ -4,32 +4,24 @@ include("conexion.php");
 include("header.html");
 include('session.php');
 ?>
-
 <body>
-
 	<script>
-
 		function habilitar(value){
 		if(value=="23" || value=="29" ||  value=="31" || value=="36" ||value==true){
 		// habilitamos
 			document.getElementById("ip").disabled=false;
 		//	document.getElementById("ip").value="";
 			document.getElementById("lab-ip").innerHTML="IP Asignada";
-
       document.getElementById("anexo").disabled=true;
-  //    document.getElementById("anexo").value="NO REQUIERE";
+     // document.getElementById("anexo").value="NO";
       document.getElementById("lab-anexo").innerHTML="NO REQUIERE";
-
 			}
       else if(value=="23" || value=="29" || value=="31" || value=="36" ||value==false){
       // deshabilitamos
-
         document.getElementById("anexo").disabled=true;
       //  document.getElementById("anexo").value="NO REQUIERE";
         document.getElementById("lab-anexo").innerHTML="NO REQUIERE";
-
         }
-
 		else if (value=="33" || value=="36" || value==true){
 		// habilitamos
 			document.getElementById("ip").disabled=false;
@@ -43,22 +35,16 @@ include('session.php');
 
 		else if(value=="28" ||value=="25" ||value=="26" ||value=="32" ||value=="35" || value==false ){
 		// deshabilitamos
-
-			document.getElementById("ip").disabled=true;
+		document.getElementById("ip").disabled=true;
 		//	document.getElementById("ip").value="NO REQUIERE";
 			document.getElementById("lab-ip").innerHTML="NO REQUIERE";
-
 			document.getElementById("anexo").disabled=true;
 		//	document.getElementById("anexo").value="NO REQUIERE";
 			document.getElementById("lab-anexo").innerHTML="NO REQUIERE";
-
-
 			}
 			}
 
 	</script>
-
-
 
 <div class="container">
 <div class="section">
@@ -207,7 +193,95 @@ include('session.php');
 
 <?php
 if(isset($_POST['insert'])){
+	
+if(!isset($_POST['anexo'])&&!isset($_POST['ip'])){
+	$categoria=$_POST['categoria'];
+$cliente=$_POST['cliente'];
+$serie=$_POST['serie'];
+$marca=$_POST['marca'];
+$modelo=$_POST['modelo'];
+$observacion=$_POST['observacion'];
+//$ip=$_POST['ip'];
+$capacidad=$_POST['capacidad'];
+$ubicacion=$_POST['ubicacion'];
+//$anexo=$_POST['anexo'];
+$ingreso=$_POST['ingreso'];
+date_default_timezone_set('America/Lima');
+//echo date('l jS \of F Y h:i:s A');
+$fecha_entrada= date("Y-m-d H:i:s");
+$fechota = (string)$fecha_entrada;
+//echo "FECHA ".$hoy;
+//echo "PROBANDO VARIABLES ".$categoria." -".$cliente;
+$fecha_salida="Sin Salida";
+	echo"</br>";echo"</br>";
+	//echo" CAMBIANDO A NO  VER RESULTADOS";echo"</br>";
+	//echo "IP ".$ip;echo"</br>";
+	//echo "CAPACIDAD ".$capacidad;echo"</br>";
+	//echo "UBICACION ".$ubicacion;echo"</br>";
+	//echo "ANEXO".$anexo;echo"</br>";
+  $cat= (int) $categoria;
+  $insertar="INSERT INTO equipo_o(serie,marca,modelo,observacion,capacidad,ubicacion,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
+   VALUES ('$serie','$marca','$modelo','$observacion','$capacidad','$ubicacion','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
 
+  $ejecutar=sqlsrv_query($conn,$insertar);
+	if($ejecutar){
+//echo "<h3>INSERTADO CORRECTAMENTE</h3>";
+	}
+	else {
+echo "<h4>NO INSERTADO ERRORRRRRR</h4>";
+if( ($errors = sqlsrv_errors() ) != null) {
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
+    }
+	}
+}
+else if(!isset($_POST['anexo'])){
+	$categoria=$_POST['categoria'];
+$cliente=$_POST['cliente'];
+$serie=$_POST['serie'];
+$marca=$_POST['marca'];
+$modelo=$_POST['modelo'];
+$observacion=$_POST['observacion'];
+$ip=$_POST['ip'];
+$capacidad=$_POST['capacidad'];
+$ubicacion=$_POST['ubicacion'];
+//$anexo=$_POST['anexo'];
+$ingreso=$_POST['ingreso'];
+date_default_timezone_set('America/Lima');
+//echo date('l jS \of F Y h:i:s A');
+$fecha_entrada= date("Y-m-d H:i:s");
+$fechota = (string)$fecha_entrada;
+//echo "FECHA ".$hoy;
+//echo "PROBANDO VARIABLES ".$categoria." -".$cliente;
+$fecha_salida="Sin Salida";
+	echo"</br>";echo"</br>";
+	//echo" CAMBIANDO A NO  VER RESULTADOS";echo"</br>";
+	//echo "IP ".$ip;echo"</br>";
+	//echo "CAPACIDAD ".$capacidad;echo"</br>";
+	//echo "UBICACION ".$ubicacion;echo"</br>";
+	//echo "ANEXO".$anexo;echo"</br>";
+  $cat= (int) $categoria;
+  $insertar="INSERT INTO equipo_o(serie,marca,modelo,observacion,ip_asiganda,capacidad,ubicacion,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
+   VALUES ('$serie','$marca','$modelo','$observacion','$ip','$capacidad','$ubicacion','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
+  $ejecutar=sqlsrv_query($conn,$insertar);
+	if($ejecutar){
+//echo "<h3>INSERTADO CORRECTAMENTE</h3>";
+	}
+	else {
+echo "<h4>NO INSERTADO ERRORRRRRR</h4>";
+if( ($errors = sqlsrv_errors() ) != null) {
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
+    }
+	}
+}
+else{
 $categoria=$_POST['categoria'];
 $cliente=$_POST['cliente'];
 $serie=$_POST['serie'];
@@ -226,63 +300,17 @@ $fechota = (string)$fecha_entrada;
 //echo "FECHA ".$hoy;
 //echo "PROBANDO VARIABLES ".$categoria." -".$cliente;
 $fecha_salida="Sin Salida";
-
-echo "CATEGORIA ".$categoria."\n"; echo"</br>";
-echo "Cliente ".$cliente."\n";echo"</br>";
-echo "serie ".$serie."\n";echo"</br>";
-echo "marca ".$marca;echo"</br>";
-echo "modelo ".$modelo;echo"</br>";
-echo "observacion ".$observacion;echo"</br>";
-echo "IP ".$ip;echo"</br>";
-echo "CAPACIDAD ".$capacidad;echo"</br>";
-echo "UBICACION ".$ubicacion;echo"</br>";
-echo "ANEXO ".$anexo;echo"</br>";
-echo "INGRESO ".$ingreso;echo"</br>";
-echo "fecha 1 ".$fecha_entrada;echo"</br>";
-echo "fecha 2 ".$fecha_salida;echo"</br>";
-if($ip==null||$anexo==null){
-//$ip="NO";
-//$capacidad="NO";
-//$ubicacion="NO";
-//$anexo="NO";
 	echo"</br>";echo"</br>";
-	echo" CAMBIANDO A NO  VER RESULTADOS";echo"</br>";
-	echo "IP ".$ip;echo"</br>";
-	echo "CAPACIDAD ".$capacidad;echo"</br>";
-	echo "UBICACION ".$ubicacion;echo"</br>";
-	echo "ANEXO".$anexo;echo"</br>";
-  $cat= (int) $categoria;
-  $insertar="INSERT INTO equipo_o(serie,marca,modelo,observacion,capacidad,ubicacion,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
-   VALUES ('$serie','$marca','$modelo','$observacion','$capacidad','$ubicacion','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
-
-  $ejecutar=sqlsrv_query($conn,$insertar);
-	if($ejecutar){
-echo "<h3>INSERTADO CORRECTAMENTE</h3>";
-	}
-	else {
-echo "<h3>NO INSERTADO ERRORRRRRR</h3>";
-if( ($errors = sqlsrv_errors() ) != null) {
-        foreach( $errors as $error ) {
-            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
-            echo "code: ".$error[ 'code']."<br />";
-            echo "message: ".$error[ 'message']."<br />";
-        }
-    }
-
-	}
-
-}
-else{
-	  $cat= (int) $categoria;
+	//echo" CAMBIANDO A NO  VER RESULTADOS";echo"</br>";
+	//echo "IP ".$ip;echo"</br>";
+	//echo "CAPACIDAD ".$capacidad;echo"</br>";
+	//echo "UBICACION ".$ubicacion;echo"</br>";	
+	$cat= (int) $categoria;
 	$insertar="INSERT INTO equipo_o(serie,marca,modelo,observacion,ip_asiganda,capacidad,ubicacion,anexo,ingreso,fecha_ingreso,fecha_salida,id_categoria,cliente_ruc)
    VALUES ('$serie','$marca','$modelo','$observacion','$ip','$capacidad','$ubicacion','$anexo','$ingreso','$fechota','$fecha_salida',$cat,'$cliente')";
-
   $ejecutar=sqlsrv_query($conn,$insertar);
-
 }
-
-
-
+	
 
 }
 else{
@@ -295,8 +323,8 @@ else{
 				 <table class="responsive-table">
         <thead>
           <tr>
+		  <th>Cliente </th>
               <th>Categoria</th>
-              <th>Cliente </th>
               <th>Serie</th>
 			        <th>Marca</th>
 							<th>Modelo</th>
@@ -320,7 +348,7 @@ else{
           while ($fila=sqlsrv_fetch_array($ejecutar)) {
             // code...
            $seri=$fila['serie'];
-					 $categoria=$fila['nombre'];
+		 $categoria=$fila['nombre'];
            $cliente=$fila['razon_social'];
           $marca=$fila['marca'];
            $modelo=$fila['modelo'];
@@ -334,8 +362,8 @@ else{
 
           <!---cuerpo de tabla --->
           <tr>
-            <td><?php echo $categoria ?></td>
-            <td><?php echo $cliente ?></td>
+           <td><?php echo $cliente ?></td>
+		   <td><?php echo $categoria ?></td>
             <td><?php echo $seri?></td>
             <td><?php echo $marca?></td>
             <td><?php echo $modelo ?></td>

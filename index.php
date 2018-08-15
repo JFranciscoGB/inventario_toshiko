@@ -3,8 +3,8 @@
 //REVISAR CODIGO PARA REVISAR
 include('login.php'); // Includes Login Script
 
-if(isset($_SESSION['login_user_sys'])){
-	header("location: producto.php");
+if(isset($_SESSION['login_user_sys'])&&isset($_SESSION['login_user_sys2'])){
+	//header("location: producto.php");
 }
 ?>
 <!DOCTYPE html>
